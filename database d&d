@@ -1,0 +1,80 @@
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Versione server:              8.0.11 - MySQL Community Server - GPL
+-- S.O. server:                  Win64
+-- HeidiSQL Versione:            9.5.0.5196
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+-- Dump della struttura del database d&d_flavio
+CREATE DATABASE IF NOT EXISTS `d&d_flavio` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
+USE `d&d_flavio`;
+
+-- Dump della struttura di tabella d&d_flavio.griglia
+CREATE TABLE IF NOT EXISTS `griglia` (
+  `nome` varchar(50) NOT NULL,
+  `x` int(11) DEFAULT NULL,
+  `y` int(11) DEFAULT NULL,
+  PRIMARY KEY (`nome`),
+  CONSTRAINT `FK_griglia_personaggi` FOREIGN KEY (`nome`) REFERENCES `personaggi` (`nome`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dump dei dati della tabella d&d_flavio.griglia: ~0 rows (circa)
+/*!40000 ALTER TABLE `griglia` DISABLE KEYS */;
+INSERT INTO `griglia` (`nome`, `x`, `y`) VALUES
+	('Andrea', 3, 1),
+	('Antonio', 1, 2),
+	('asdas', 1, 0),
+	('Filippo', 7, 3),
+	('Nicola', 5, 0),
+	('Paco', 5, 1);
+/*!40000 ALTER TABLE `griglia` ENABLE KEYS */;
+
+-- Dump della struttura di tabella d&d_flavio.hp
+CREATE TABLE IF NOT EXISTS `hp` (
+  `Nome` varchar(50) NOT NULL,
+  `Punti_ferita_max` int(11) NOT NULL,
+  `Punti_ferita_attuali` int(11) NOT NULL,
+  PRIMARY KEY (`Nome`),
+  CONSTRAINT `FK_caratteristiche_personaggi` FOREIGN KEY (`Nome`) REFERENCES `personaggi` (`nome`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dump dei dati della tabella d&d_flavio.hp: ~0 rows (circa)
+/*!40000 ALTER TABLE `hp` DISABLE KEYS */;
+INSERT INTO `hp` (`Nome`, `Punti_ferita_max`, `Punti_ferita_attuali`) VALUES
+	('Andrea', 20, 20);
+/*!40000 ALTER TABLE `hp` ENABLE KEYS */;
+
+-- Dump della struttura di tabella d&d_flavio.personaggi
+CREATE TABLE IF NOT EXISTS `personaggi` (
+  `Nome` varchar(50) NOT NULL,
+  `Forza` int(11) DEFAULT NULL,
+  `Destrezza` int(11) NOT NULL,
+  `Costituzione` int(11) DEFAULT NULL,
+  `Intelligenza` int(11) DEFAULT NULL,
+  `Saggezza` int(11) DEFAULT NULL,
+  `Carisma` int(11) DEFAULT NULL,
+  `Iniziativa` int(11) NOT NULL,
+  PRIMARY KEY (`Nome`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dump dei dati della tabella d&d_flavio.personaggi: ~5 rows (circa)
+/*!40000 ALTER TABLE `personaggi` DISABLE KEYS */;
+INSERT INTO `personaggi` (`Nome`, `Forza`, `Destrezza`, `Costituzione`, `Intelligenza`, `Saggezza`, `Carisma`, `Iniziativa`) VALUES
+	('Andrea', 15, 12, 12, 14, 23, 13, 32),
+	('Antonio', NULL, 14, NULL, NULL, NULL, NULL, 12),
+	('asdas', NULL, 23, NULL, NULL, NULL, NULL, 23),
+	('Filippo', 15, 12, 15, 15, 14, 13, 32),
+	('Nicola', NULL, 12, NULL, NULL, NULL, NULL, 10),
+	('Paco', NULL, 13, NULL, NULL, NULL, NULL, 5);
+/*!40000 ALTER TABLE `personaggi` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
