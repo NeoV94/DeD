@@ -1,0 +1,146 @@
+<div>
+  <input type="button" value="Next turno" (click)="nextTurn()" />
+  <input type="button" value="Reset Iniziative" (click)="resetiniziative()" />
+  <p>Il turno è attivo da: {{timer}} ms</p>
+  <table>
+    <tr>
+      <td>
+        <table>
+      <th></th>
+      <th>Nome</th>
+      <th>Destrezza</th>
+      <th>Iniziativa</th>
+    <tr *ngFor="let i of a;let index =index ">
+      <td>
+        <div *ngIf="index==turno;else notactive">
+          <svg width="12" height="15">
+            <polygon #active points="0,0 0,15 12,8" fill="red" />
+          </svg>
+        </div>
+        <ng-template #notactive>
+          <svg width="12" height="15">
+            <polygon #notactive points="0,0 0,15 12,8" fill="white" />
+          </svg>
+        </ng-template>
+
+      </td>
+      <td class="name" (click)="deletePlayer(i)">{{i.nome}}
+      <td style="text-align: center">{{i.destrezza}}</td>
+      <td style="text-align: center">{{i.iniziativa}}</td>
+      <td><input class="text" type="number" #try></td>
+      <td><input type="submit" value="set" (click)="setIniziativa(index,try.value)"></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><input class="text" type="text" #nome></td>
+      <td><input class="text" type="number" #destrezza></td>
+      <td><input class="text" type="number" #iniziativa></td>
+      <td><input type="submit" (click)="addPlayer(nome.value,destrezza.value,iniziativa.value)" value="Add new Player"></td>
+    </tr>
+  </table>
+  </td>
+  <td></td>
+  <td></td>
+  <table>
+    <th>Dadi</th>
+    <th>Valore</th>
+    <th>Numero dadi</th>
+    <th>Somma</th>
+    <tr>
+      <td><input type="button" value="lancia il d20" (click)="lanciad20()"></td>
+      <td class="label"><label>{{d20[d20.length-1]}}</label></td>
+      <td class="label"><label>{{d20.length==0? null:d20.length}}</label></td>
+      <td class="label"><label>{{d20.length==0? null:d20summ}}</label></td>
+      <td><input type="button" value="reset" (click)="resetDadi(d20)"></td>
+    </tr>
+
+    <tr>
+      <td><input type="button" value="lancia il d12" (click)="lanciad12()"></td>
+      <td class="label"><label>{{d12[d12.length-1]}}</label></td>
+      <td class="label"><label>{{d12.length==0? null:d12.length}}</label></td>
+      <td class="label"><label>{{d12.length==0? null:d12summ}}</label></td>
+      <td><input type="button" value="reset" (click)="resetDadi(d12)"></td>
+    </tr>
+    <tr>
+      <td><input type="button" value="lancia il d10" (click)="lanciad10()"></td>
+      <td class="label"><label>{{d10[d10.length-1]}}</label></td>
+      <td class="label"><label>{{d10.length==0? null:d10.length}}</label></td>
+      <td class="label"><label>{{d10.length==0? null:d10summ}}</label></td>
+      <td><input type="button" value="reset" (click)="resetDadi(d10)"></td>
+    </tr>
+    <tr>
+      <td><input type="button" value="lancia il d6" (click)="lanciad6()"></td>
+      <td class="label"><label>{{d6[d6.length-1]}}</label></td>
+      <td class="label"><label>{{d6.length==0? null:d6.length}}</label></td>
+      <td class="label"><label>{{d6.length==0? null:d6summ}}</label></td>
+      <td><input type="button" value="reset" (click)="resetDadi(d6)"></td>
+    </tr>
+    <tr>
+      <td><input type="button" value="lancia il d4" (click)="lanciad4()"></td>
+      <td class="label"><label>{{d4[d4.length-1]}}</label></td>
+      <td class="label"><label>{{d4.length==0? null:d4.length}}</label></td>
+      <td class="label"><label>{{d4.length==0? null:d4summ}}</label></td>
+      <td><input type="button" value="reset" (click)="resetDadi(d4)"></td>
+    </tr>
+    <tr>
+      <td><input type="button" value="lancia il d%" (click)="lanciadPer()"></td>
+      <td class="label"><label>{{dPer[dPer.length-1]}}</label></td>
+      <td class="label"><label>{{dPer.length==0? null:dPer.length}}</label></td>
+      <td class="label"><label>{{dPer.length==0? null:dPersumm}}</label></td>
+      <td><input type="button" value="reset" (click)="resetDadi(dPer)"></td>
+    </tr>
+    <tr>
+      <th class="label">TOTALE</th>
+      <td></td>
+      <td></td>
+      <td style="text-align: center" #totale>{{(d20.length==0?+0:+d20summ) + (d12.length==0?+0:+d12summ) +
+        (d10.length==0?+0:+d10summ)+
+        (d6.length==0?+0:+d6summ)+ (d4.length==0?+0:+d4summ)}}</td>
+    </tr>
+  </table>
+  </tr>
+
+  </table>
+</div>
+<div>
+  <table>
+    <tr>
+      <td>
+        <table>
+      <th>Mappa X*Y</th>
+      <td>x:</td>
+      <td><input type="number" [(ngModel)]="graficX" (ngModelChange)="resetGrafico()"></td>
+      <td>y:</td>
+      <td><input type="number" [(ngModel)]="graficY" (ngModelChange)="resetGrafico()"></td>
+  </table>
+  <table>
+
+    <tr class="griglia" *ngFor="let righe of l; let y = index">
+      <td class="griglia" *ngFor="let colonne of righe; let x = index" (click)="movePg(turno,x,y)">{{l[y][x]}}</td>
+    </tr>
+  </table>
+  </td>
+  </tr>
+  <tr>
+    <td>
+      <table>
+        <tr>
+          <th colspan="5" class="label">Danni Inflitti</th>
+        </tr>
+        <tr>
+          <td><select #da>
+              <option *ngFor="let p of a">{{p.nome}}</option>
+            </select></td>
+          <td><input type="number" #danni value="{{(d20.length==0?+0:+d20summ) + (d12.length==0?+0:+d12summ) +
+              (d10.length==0?+0:+d10summ)+
+              (d6.length==0?+0:+d6summ)+ (d4.length==0?+0:+d4summ)}}" /></td>
+          <td><select #danneggiato>
+              <option *ngFor="let f of a">{{f.nome}}</option>
+            </select></td>
+          <td><input type="submit" value="invio" (click)="danneggia(da.value,danni.value,danneggiato.value)"></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  </table>
+</div>

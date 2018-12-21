@@ -1,0 +1,32 @@
+td.name:hover{
+        background-color: red
+}
+
+input.text{
+    width: 100px
+}
+
+input{
+    width: 120px;
+}
+td.label{
+    text-align: center;
+    border: 1px solid black
+}
+.triangle {
+width: 0;
+  height: 0;
+  border-top-width: 20px;
+  border-top-style: solid;
+  border-top-color: transparent;
+  border-right-width: 20px;
+  border-right-style: solid;
+  border-right-color: red;
+}
+
+.griglia{
+   width: 50px;
+   height: 50px; 
+   border: 1px solid black;
+   text-align: center
+}
